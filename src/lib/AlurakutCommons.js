@@ -194,15 +194,15 @@ export function AlurakutProfileSidebarMenuDefault() {
           </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/book.svg`} />
-            Recados
+            Scraps
           </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/camera.svg`} />
-            Fotos
+            Pictures
           </a>
         <a href="/">
           <img src={`${BASE_URL}/icons/sun.svg`} />
-            Depoimentos
+            Testimonials
           </a>
       </nav>
       <hr />
@@ -213,7 +213,7 @@ export function AlurakutProfileSidebarMenuDefault() {
           </a>
         <a href="/logout">
           <img src={`${BASE_URL}//icons/logout.svg`} />
-            Sair
+            Exit
           </a>
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
