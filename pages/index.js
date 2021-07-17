@@ -1,4 +1,6 @@
 import React from 'react';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 
 import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/Box';
@@ -24,8 +26,8 @@ function ProfileSideBar(props) {
 	)
 }
 
-export default function Home() {
-	const gitHubUser = 'danilo0391';
+export default function Home(props) {
+	const gitHubUser = props.githubUser;
 	const [communities, setCommunites] = React.useState([{
 		// id: '91827391827319827918237',
 		// title: 'I hate to wake up early',
@@ -46,11 +48,9 @@ export default function Home() {
 	React.useEffect( () => {
 		fetch('https://api.github.com/users/danilo0391/followers')
 		.then((serverResponse) => {
-			console.log(serverResponse);
 			return serverResponse.json();
 		})
 		.then((fullResponse) => {
-			console.log(fullResponse)
 			setFollowers(fullResponse);
 		})
 
@@ -74,7 +74,6 @@ export default function Home() {
 		.then((response) => response.json())
 		.then((fullResponse) => {
 			const datoCommunites = fullResponse.data.allCommunities;
-			console.log(datoCommunites);
 			setCommunites(datoCommunites)
 		})
 	}, [])
@@ -204,4 +203,37 @@ export default function Home() {
 		</MainGrid>
 		</>
 	)
+}
+
+
+export async function getServerSideProps(context) {
+	const cookies = nookies.get(context);
+	const token = cookies.USER_TOKEN;
+	console.log('Token decoded', )
+
+	const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth', {
+		headers: {
+			Authorization: token
+		}
+	})
+	.then((response) => response.json())
+	
+	console.log('isAuthenticated', isAuthenticated)
+
+	if(!isAuthenticated) {
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false,
+			}
+		}
+	}
+
+	const { githubUser } = jwt.decode(token);
+
+  return {
+    props: {
+			githubUser
+		}, // will be passed to the page component as props
+  }
 }
