@@ -6,6 +6,8 @@ const BASE_URL = 'http://alurakut.vercel.app/';
 const v = '1';
 
 
+
+
 function Link({ href, children, ...props }) {
   return (
     <NextLink href={href} passHref>
@@ -21,6 +23,7 @@ function Link({ href, children, ...props }) {
 // ================================================================================================================
 export function AlurakutMenu({ githubUser }) {
   const [isMenuOpen, setMenuState] = React.useState(false);
+  githubUser = "danilo0391";
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
@@ -48,7 +51,7 @@ export function AlurakutMenu({ githubUser }) {
           {!isMenuOpen && <img src={`${BASE_URL}/icons/menu-closed.svg?v=${v}`} />}
         </button>
       </div>
-      <AlurakutMenuProfileSidebar githubUser={githubUser} />
+      <AlurakutMenuProfileSidebar githubUser={githubUser}  />
     </AlurakutMenu.Wrapper>
   )
 }
